@@ -78,19 +78,24 @@
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
 
-        console.log(data);
-        console.log(todos);
-
 		callback = callback || function () {};
 
 		// Generate an ID
 	    var newId = "";
-	    var charset = "0123456789";
+	    // var charset = "0123456789";
 
-        for (var i = 0; i < 6; i++) {
-            console.log(newId)
-     		newId += charset.charAt(Math.floor(Math.random() * charset.length));
-		}
+
+		let array = new Uint32Array(10);
+		self.crypto.getRandomValues(array);
+
+		let randomNumber = Math.floor(Math.random() * 11);
+
+		newId = array[randomNumber];
+
+        // for (var i = 0; i < 6; i++) {
+     	// 	newId += charset.charAt(Math.floor(Math.random() * charset.length));
+		// }
+
         // https://dev.to/rahmanfadhil/how-to-generate-unique-id-in-javascript-1b13
         // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
@@ -111,7 +116,6 @@
 
     		// Assign an ID
 			updateData.id = parseInt(newId);
-
 
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);
@@ -134,13 +138,17 @@
 			if (todos[i].id == id) {
 				todoId = todos[i].id;
 			}
-		}
 
-		for (var i = 0; i < todos.length; i++) {
 			if (todos[i].id == todoId) {
 				todos.splice(i, 1);
 			}
 		}
+
+		// for (var i = 0; i < todos.length; i++) {
+		// 	if (todos[i].id == todoId) {
+		// 		todos.splice(i, 1);
+		// 	}
+		// }
 
 		localStorage[this._dbName] = JSON.stringify(data);
 		callback.call(this, todos);
