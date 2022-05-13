@@ -78,6 +78,9 @@
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
 
+        console.log(data);
+        console.log(todos);
+
 		callback = callback || function () {};
 
 		// Generate an ID
@@ -85,8 +88,11 @@
 	    var charset = "0123456789";
 
         for (var i = 0; i < 6; i++) {
+            console.log(newId)
      		newId += charset.charAt(Math.floor(Math.random() * charset.length));
 		}
+        // https://dev.to/rahmanfadhil/how-to-generate-unique-id-in-javascript-1b13
+        // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
